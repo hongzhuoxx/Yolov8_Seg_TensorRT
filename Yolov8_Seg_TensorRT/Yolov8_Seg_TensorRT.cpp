@@ -17,9 +17,9 @@ int main()
 	//========== 测试数据
 
 
-	std::string str_onnxPath = "D:/ZxCodes/C++/Yolov8_Seg_TensorRT/Yolov8_Seg_TensorRT/models/yolov8s-seg.onnx";
-	std::string str_enginePath = "D:/ZxCodes/C++/Yolov8_Seg_TensorRT/Yolov8_Seg_TensorRT/models/yolov8s-seg.engine";
-	std::string str_testImg = "D:\\ZxTestData\\test111.jpg";
+	std::string str_onnxPath = "D:/ZxCodes/C++/ZxOnnx_GPU_ALL/ZxOnnx/models/michelin.onnx";
+	std::string str_enginePath = "D:/ZxCodes/C++/ZxOnnx_GPU_ALL/ZxOnnx/models/michelin.engine";
+	std::string str_testImg = "D:/ZxCodes/C++/ZxOnnx_GPU_ALL/ZxOnnx/images/m1.bmp";
 
 	char* c_onnxPath = new char[str_onnxPath.length() + 1];
 	::strcpy_s(c_onnxPath, str_onnxPath.length() + 1, str_onnxPath.c_str());
@@ -35,22 +35,23 @@ int main()
 
 	if (false)
 	{
-		std::cout << "开始模型转换\n";
+		std::cout << "开始模型转换/n";
 
 		// 模型转换
 		main_o2t(c_onnxPath, c_enginePath);
 
-		std::cout << "模型转换结束!\n";
+		std::cout << "模型转换结束!/n";
 	}
 
 	if (true)
 	{
-		std::cout << "开始实例分割!\n";
+		std::cout << "开始实例分割!/n";
 
 		// 实例分割
+
 		seg_trt_go(c_enginePath, c_testImg);
 
-		std::cout << "实力分割结束!\n";
+		std::cout << "实力分割结束!/n";
 	}
 }
 

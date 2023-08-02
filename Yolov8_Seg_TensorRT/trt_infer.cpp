@@ -13,13 +13,33 @@ using namespace nvinfer1;
 using namespace cv;
 
 // stuff we know about the network and the input/output blobs
-static const int INPUT_H = 640;
-static const int INPUT_W = 640;
-static const int _segWidth = 160;
-static const int _segHeight = 160;
+
+//static const int INPUT_H = 640;
+//static const int INPUT_W = 640;
+//static const int _segWidth = 160;
+//static const int _segHeight = 160;
+//static const int _segChannels = 37;
+//static const int CLASSES = 1;
+//static const int Num_box = 8400;
+
+//best.pt with input shape (1, 3, 2016, 2016) BCHW and output shape(s) ((1, 37, 83349), (1, 32, 504, 504)) (23.2 MB)
+//static const int INPUT_H = 2016;
+//static const int INPUT_W = 2016;
+//static const int _segWidth = 504;
+//static const int _segHeight = 504;
+//static const int _segChannels = 32;
+//static const int CLASSES = 1;
+//static const int Num_box = 83349;
+
+// 米其林的测试数据
+static const int INPUT_H = 1280;
+static const int INPUT_W = 1280;
+static const int _segWidth = 320;
+static const int _segHeight = 320;
 static const int _segChannels = 32;
-static const int CLASSES = 80;
-static const int Num_box = 8400;
+static const int CLASSES = 17;
+static const int Num_box = 33600;
+
 static const int OUTPUT_SIZE = Num_box * (CLASSES + 4 + _segChannels);//output0
 static const int OUTPUT_SIZE1 = _segChannels * _segWidth * _segHeight;//output1
 
@@ -308,10 +328,12 @@ int seg_trt_go(char* enginePath, char* imgPath)
 		mask = mask(temp_rect) > MASK_THRESHOLD;
 		output[i].boxMask = mask;
 	}
+
+	DrawPred(src, output);
+
 	end = std::chrono::system_clock::now();
 	std::cout << "后处理时间：" << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
 
-	DrawPred(src, output);
 	cv::imshow("output.jpg", src);
 	char c = cv::waitKey(0);
 
